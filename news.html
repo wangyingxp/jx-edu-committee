@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新闻动态 - 上海江西商会教工委</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-icon">教</div>
+        <div class="logo-text">
+          <h1>上海江西商会教工委</h1>
+          <span>上海市江西商会教育科技工作委员会</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="/">首页</a>
+        <a href="/about">关于我们</a>
+        <a href="/organization">组织架构</a>
+        <a href="/services">核心服务</a>
+        <a href="/news">新闻动态</a>
+        <a href="/contact">联系我们</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- News List -->
+  <section class="news-page">
+    <div class="section-container">
+      <div class="section-header">
+        <h2>新闻动态</h2>
+        <div class="divider"></div>
+      </div>
+
+      <!-- Category Filters -->
+      <div class="category-filters" id="categoryFilters" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;">
+        <span id="filterLoading" style="color:var(--text-light);">加载中...</span>
+      </div>
+
+      <!-- News List -->
+      <div class="news-list" id="newsList">
+        <p style="text-align:center;color:var(--text-light);padding:40px;">加载中...</p>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>上海市江西商会教育科技工作委员会</h4>
+        <p>致力于服务在沪赣籍教育科技界人士</p>
+      </div>
+      <div class="footer-col">
+        <h4>快速链接</h4>
+        <p><a href="/">首页</a></p>
+        <p><a href="/about">关于我们</a></p>
+        <p><a href="/organization">组织架构</a></p>
+        <p><a href="/services">核心服务</a></p>
+        <p><a href="/news">新闻动态</a></p>
+        <p><a href="/contact">联系我们</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>联系方式</h4>
+        <p>手机：139****8888</p>
+        <p>邮箱：contact@jxedu.sh.cn</p>
+        <p>地址：上海市</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 上海市江西商会教育科技工作委员会 版权所有</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    let currentCategory = '全部';
+    let currentPage = 1;
+    let totalPages = 1;
+
+    // 加载分类筛选
+    async function loadCategories() {
+      const container = document.getElementById('categoryFilters');
+      try {
+        const categories = await fetchCategories();
+        const cats = categories.map(c => c.category);
+        container.innerHTML = '';
+
+        // 添加"全部"按钮
+        const allBtn = document.createElement('button');
+        allBtn.textContent = '全部';
+        allBtn.className = 'btn btn-category active';
+        allBtn.style.cssText = 'padding:6px 20px;border-radius:20px;border:1px solid var(--primary);background:var(--primary);color:white;cursor:pointer;font-size:14px;';
+        allBtn.onclick = () => switchCategory('全部');
+        container.appendChild(allBtn);
+
+        // 添加各分类按钮
+        cats.forEach(cat => {
+          const btn = document.createElement('button');
+          btn.textContent = cat;
+          btn.className = 'btn btn-category';
+          btn.style.cssText = 'padding:6px 20px;border-radius:20px;border:1px solid var(--border);background:white;color:var(--text);cursor:pointer;font-size:14px;transition:all 0.2s;';
+          btn.onclick = () => switchCategory(cat);
+          btn.onmouseenter = () => { if (!btn.classList.contains('active')) { btn.style.borderColor = 'var(--primary)'; btn.style.color = 'var(--primary)'; } };
+          btn.onmouseleave = () => { if (!btn.classList.contains('active')) { btn.style.borderColor = 'var(--border)'; btn.style.color = 'var(--text)'; } };
+          container.appendChild(btn);
+        });
+      } catch (err) {
+        container.innerHTML = '<span style="color:var(--text-light);">暂无分类</span>';
+        console.error('获取分类失败:', err);
+      }
+    }
+
+    // 切换分类
+    function switchCategory(cat) {
+      currentCategory = cat;
+      currentPage = 1;
+      updateCategoryButtons();
+      loadNews();
+    }
+
+    function updateCategoryButtons() {
+      const buttons = document.querySelectorAll('.btn-category');
+      buttons.forEach(btn => {
+        if (btn.textContent === currentCategory) {
+          btn.classList.add('active');
+          btn.style.background = 'var(--primary)';
+          btn.style.color = 'white';
+          btn.style.borderColor = 'var(--primary)';
+        } else {
+          btn.classList.remove('active');
+          btn.style.background = 'white';
+          btn.style.color = 'var(--text)';
+          btn.style.borderColor = 'var(--border)';
+        }
+      });
+    }
+
+    // 加载新闻列表
+    async function loadNews() {
+      const list = document.getElementById('newsList');
+      const pagination = document.getElementById('pagination');
+      list.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:40px;">加载中...</p>';
+
+      try {
+        const data = await fetchNewsList({ category: currentCategory, page: currentPage });
+        totalPages = data.totalPages;
+
+        if (!data.news || data.news.length === 0) {
+          list.innerHTML = '<p style="text-align:center;color:var(--text-light);padding:40px;">暂无新闻</p>';
+          pagination.innerHTML = '';
+          return;
+        }
+
+        list.innerHTML = data.news.map(item => {
+          const d = new Date(item.created_at);
+          const day = String(d.getDate()).padStart(2, '0');
+          const month = getMonthName(item.created_at);
+          const dateText = formatDate(item.created_at);
+          const summary = item.summary || '';
+          return `
+            <div class="news-list-item">
+              <div class="news-list-date">
+                <div class="day">${day}</div>
+                <div class="month">${month} ${d.getFullYear()}</div>
+              </div>
+              <div class="news-list-content">
+                <h4><a href="/news/${item.id}" style="color:var(--primary);">${escapeHtml(item.title)}</a></h4>
+                ${summary ? `<p>${escapeHtml(summary)}</p>` : ''}
+                <span class="news-card-category" style="margin-top:8px;display:inline-block;">${escapeHtml(item.category)}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // 分页
+        renderPagination();
+      } catch (err) {
+        list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:40px;">加载失败，请稍后重试</p>';
+        console.error('加载新闻失败:', err);
+      }
+    }
+
+    function renderPagination() {
+      const pagination = document.getElementById('pagination');
+      if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+      }
+
+      let html = '';
+      html += `<button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>上一页</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+      }
+      html += `<button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>下一页</button>`;
+      pagination.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      loadNews();
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+    }
+
+    // 初始化
+    loadCategories();
+    loadNews();
+  </script>
+</body>
+</html>

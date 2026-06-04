@@ -1,0 +1,16 @@
+{
+  "name": "jx-edu-committee",
+  "version": "1.0.0",
+  "description": "上海江西商会教工委官方网站",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

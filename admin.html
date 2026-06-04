@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理后台 - 上海江西商会教工委</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-layout">
+
+  <!-- Login Screen -->
+  <div id="loginScreen">
+    <div class="admin-login">
+      <h2>管理员登录</h2>
+      <div class="form-group">
+        <label for="loginUsername">用户名</label>
+        <input type="text" id="loginUsername" placeholder="请输入用户名" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">密码</label>
+        <input type="password" id="loginPassword" placeholder="请输入密码" autocomplete="current-password">
+      </div>
+      <p id="loginError" style="color:var(--danger);font-size:14px;margin-bottom:16px;display:none;"></p>
+      <button class="btn-submit" onclick="handleLogin()">登录</button>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard (hidden initially) -->
+  <div id="dashboardScreen" style="display:none;">
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+      <h2>管理后台</h2>
+      <button class="btn-sm" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.3);" onclick="handleLogout()">退出登录</button>
+    </header>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+
+      <!-- Stats -->
+      <div class="admin-stats" id="adminStats">
+        <div class="admin-stat-card">
+          <div class="label">文章总数</div>
+          <div class="value" id="statTotal">-</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="label">已发布</div>
+          <div class="value" id="statPublished">-</div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <h3 style="color:var(--primary);">新闻管理</h3>
+        <button class="btn btn-primary" style="padding:8px 20px;" onclick="openCreateModal()">+ 发布新闻</button>
+      </div>
+
+      <!-- News Table -->
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>标题</th>
+              <th>分类</th>
+              <th>状态</th>
+              <th>发布时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="newsTableBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">加载中...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3 id="modalTitle">发布新闻</h3>
+      <div class="form-group">
+        <label>标题 *</label>
+        <input type="text" id="inputTitle" placeholder="请输入新闻标题">
+      </div>
+      <div class="form-group">
+        <label>分类</label>
+        <input type="text" id="inputCategory" placeholder="请输入分类名称（如：新闻动态、活动公告等）" list="categorySuggestions">
+        <datalist id="categorySuggestions"></datalist>
+      </div>
+      <div class="form-group">
+        <label>摘要</label>
+        <textarea id="inputSummary" placeholder="请输入新闻摘要" style="min-height:80px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label>封面图URL</label>
+        <input type="text" id="inputCoverImage" placeholder="请输入图片URL（可选）">
+      </div>
+      <div class="form-group">
+        <label>内容 *</label>
+        <textarea id="inputContent" placeholder="请输入新闻内容" style="min-height:200px;"></textarea>
+      </div>
+      <div class="form-group">
+        <label style="display:flex;align-items:center;gap:8px;font-weight:600;cursor:pointer;">
+          <input type="checkbox" id="inputPublished" checked>
+          是否发布
+        </label>
+      </div>
+      <p id="modalError" style="color:var(--danger);font-size:14px;margin-bottom:12px;display:none;"></p>
+      <div style="display:flex;gap:12px;">
+        <button class="btn-submit" id="btnSave" onclick="handleSave()">保存</button>
+        <button class="btn btn-outline" style="color:var(--text);border-color:var(--border);flex:1;" onclick="closeModal()">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let editingId = null;
+
+    // ===== Auth (JWT Token) =====
+    let authToken = localStorage.getItem('jx_admin_token') || '';
+
+    function getAuthHeaders() {
+      return authToken ? { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken } : { 'Content-Type': 'application/json' };
+    }
+
+    async function checkAuth() {
+      if (!authToken) return;
+      try {
+        const res = await fetch('/api/admin/check', { headers: { 'Authorization': 'Bearer ' + authToken } });
+        const data = await res.json();
+        if (data.isAdmin) {
+          showDashboard();
+        } else {
+          localStorage.removeItem('jx_admin_token');
+          authToken = '';
+        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
+      }
+    }
+
+    async function handleLogin() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const errorEl = document.getElementById('loginError');
+
+      if (!username || !password) {
+        errorEl.textContent = '请输入用户名和密码';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      errorEl.style.display = 'none';
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.token) {
+          authToken = data.token;
+          localStorage.setItem('jx_admin_token', data.token);
+          showDashboard();
+        } else {
+          errorEl.textContent = data.error || '登录失败';
+          errorEl.style.display = 'block';
+        }
+      } catch (err) {
+        errorEl.textContent = '登录失败，请稍后重试';
+        errorEl.style.display = 'block';
+      }
+    }
+
+    async function handleLogout() {
+      localStorage.removeItem('jx_admin_token');
+      authToken = '';
+      showLogin();
+    }
+
+    // Support Enter key for login
+    document.getElementById('loginPassword').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+    document.getElementById('loginUsername').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') document.getElementById('loginPassword').focus();
+    });
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboardScreen').style.display = 'block';
+      loadAdminNews();
+    }
+
+    function showLogin() {
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('dashboardScreen').style.display = 'none';
+      document.getElementById('loginPassword').value = '';
+    }
+
+    // ===== News Loading =====
+
+    async function loadAdminNews() {
+      const tbody = document.getElementById('newsTableBody');
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">加载中...</td></tr>';
+
+      try {
+        const res = await fetch('/api/admin/news', { headers: getAuthHeaders() });
+        if (!res.ok) {
+          if (res.status === 401) {
+            showLogin();
+            return;
+          }
+          throw new Error('获取新闻列表失败');
+        }
+
+        const newsList = await res.json();
+        updateStats(newsList);
+
+        if (!newsList || newsList.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:24px;">暂无新闻，点击上方按钮发布</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = newsList.map(item => {
+          const d = new Date(item.created_at);
+          const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+          const status = item.is_published
+            ? '<span style="color:var(--success);font-weight:500;">已发布</span>'
+            : '<span style="color:var(--text-light);">草稿</span>';
+          const title = escapeHtml(item.title);
+          return `
+            <tr>
+              <td><strong>${title}</strong></td>
+              <td>${escapeHtml(item.category)}</td>
+              <td>${status}</td>
+              <td>${dateStr}</td>
+              <td class="actions">
+                <button class="btn-edit btn-sm" onclick="openEditModal(${item.id})">编辑</button>
+                <button class="btn-delete btn-sm" onclick="confirmDelete(${item.id}, '${escapeHtml(item.title).replace(/'/g, "&#39;")}')">删除</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Load category suggestions
+        loadCategorySuggestions(newsList);
+
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--danger);padding:24px;">加载失败，请刷新重试</td></tr>';
+        console.error('加载新闻列表失败:', err);
+      }
+    }
+
+    function loadCategorySuggestions(newsList) {
+      const categories = [...new Set(newsList.map(n => n.category))];
+      const datalist = document.getElementById('categorySuggestions');
+      datalist.innerHTML = categories.map(c => `<option value="${escapeHtml(c)}">`).join('');
+    }
+
+    function updateStats(newsList) {
+      const total = newsList ? newsList.length : 0;
+      const published = newsList ? newsList.filter(n => n.is_published).length : 0;
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statPublished').textContent = published;
+    }
+
+    // ===== CRUD Operations =====
+
+    function openCreateModal() {
+      editingId = null;
+      document.getElementById('modalTitle').textContent = '发布新闻';
+      document.getElementById('inputTitle').value = '';
+      document.getElementById('inputCategory').value = '';
+      document.getElementById('inputSummary').value = '';
+      document.getElementById('inputCoverImage').value = '';
+      document.getElementById('inputContent').value = '';
+      document.getElementById('inputPublished').checked = true;
+      document.getElementById('btnSave').textContent = '保存';
+      document.getElementById('modalError').style.display = 'none';
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    async function openEditModal(id) {
+      try {
+        const res = await fetch(`/api/admin/news/${id}`, { headers: getAuthHeaders() });
+        if (!res.ok) throw new Error('获取文章详情失败');
+        const news = await res.json();
+
+        editingId = news.id;
+        document.getElementById('modalTitle').textContent = '编辑新闻';
+        document.getElementById('inputTitle').value = news.title || '';
+        document.getElementById('inputCategory').value = news.category || '';
+        document.getElementById('inputSummary').value = news.summary || '';
+        document.getElementById('inputCoverImage').value = news.cover_image || '';
+        document.getElementById('inputContent').value = news.content || '';
+        document.getElementById('inputPublished').checked = !!news.is_published;
+        document.getElementById('btnSave').textContent = '更新';
+        document.getElementById('modalError').style.display = 'none';
+        document.getElementById('modalOverlay').classList.add('active');
+      } catch (err) {
+        alert('获取文章详情失败');
+        console.error(err);
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    async function handleSave() {
+      const title = document.getElementById('inputTitle').value.trim();
+      const category = document.getElementById('inputCategory').value.trim() || '新闻动态';
+      const summary = document.getElementById('inputSummary').value.trim();
+      const coverImage = document.getElementById('inputCoverImage').value.trim();
+      const content = document.getElementById('inputContent').value.trim();
+      const isPublished = document.getElementById('inputPublished').checked ? 1 : 0;
+      const errorEl = document.getElementById('modalError');
+
+      if (!title) {
+        errorEl.textContent = '请输入标题';
+        errorEl.style.display = 'block';
+        return;
+      }
+      if (!content) {
+        errorEl.textContent = '请输入内容';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      errorEl.style.display = 'none';
+      const url = editingId ? `/api/admin/news/${editingId}` : '/api/admin/news';
+      const method = editingId ? 'PUT' : 'POST';
+
+      try {
+        const res = await fetch(url, {
+          method,
+          headers: getAuthHeaders(),
+          body: JSON.stringify({ title, category, content, summary, cover_image: coverImage, is_published: isPublished })
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          errorEl.textContent = data.error || '保存失败';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        closeModal();
+        loadAdminNews();
+      } catch (err) {
+        errorEl.textContent = '保存失败，请稍后重试';
+        errorEl.style.display = 'block';
+        console.error('保存新闻失败:', err);
+      }
+    }
+
+    async function confirmDelete(id, title) {
+      if (!confirm(`确定要删除「${title}」吗？此操作不可恢复。`)) return;
+      try {
+        const res = await fetch(`/api/admin/news/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders()
+        });
+        if (res.ok) {
+          loadAdminNews();
+        } else {
+          alert('删除失败');
+        }
+      } catch (err) {
+        alert('删除失败，请稍后重试');
+        console.error('删除新闻失败:', err);
+      }
+    }
+
+    // Click outside modal to close
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Escape key to close modal
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Initialize
+    checkAuth();
+  </script>
+</body>
+</html>
