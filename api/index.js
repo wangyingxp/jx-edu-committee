@@ -242,17 +242,17 @@ app.post('/api/admin/news', adminAuth, async (req, res) => {
     };
     data.news.push(newItem);
 
-    // Try GitHub write if configured
+    let gitError = null;
     if (canWriteToGitHub()) {
       try {
         await githubWrite(data, `发布新闻: ${title}`);
       } catch (e) {
         console.error('GitHub write error:', e.message);
-        // Continue - data saved in memory for this session
+        gitError = e.message;
       }
     }
 
-    res.json({ success: true, id: newItem.id, githubSync: canWriteToGitHub() });
+    res.json({ success: true, id: newItem.id, githubSync: canWriteToGitHub() && !gitError, gitError });
   } catch (err) {
     console.error('POST /api/admin/news error:', err.message);
     res.status(500).json({ error: '服务器错误' });
