@@ -34,7 +34,13 @@ function loadLocalData() {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, 'utf8');
       const parsed = JSON.parse(raw);
+      // Object format: {news, users, nextId}
       if (parsed.news && parsed.users && typeof parsed.nextId === 'number') return parsed;
+      // Array format: convert to object
+      if (Array.isArray(parsed)) {
+        const maxId = parsed.reduce((max, n) => Math.max(max, n.id || 0), 0);
+        return { news: parsed, users: [...SEED_USERS], nextId: maxId + 1 };
+      }
     }
   } catch (e) { /* fall through */ }
   return { news: [...SEED_NEWS], users: [...SEED_USERS], nextId: SEED_NEWS.length + 1 };
@@ -53,6 +59,7 @@ function canWriteToGitHub() {
 }
 
 // Read from GitHub (gets latest data.json from repo)
+// Handles both formats: array of news items, or {news, users, nextId} object
 async function githubRead() {
   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/data.json`;
   const headers = { Accept: 'application/vnd.github.v3+json' };
@@ -61,8 +68,30 @@ async function githubRead() {
   const res = await fetch(url, { headers });
   if (!res.ok) throw new Error(`GitHub read failed: ${res.status}`);
   const file = await res.json();
-  const content = Buffer.from(file.content, 'base64').toString('utf8');
-  return { data: JSON.parse(content), sha: file.sha };
+  const content = file.content ? Buffer.from(file.content, 'base64').toString('utf8') : '';
+  
+  let data;
+  try {
+    const parsed = JSON.parse(content);
+    if (Array.isArray(parsed)) {
+      // Array format: convert to proper structure
+      const news = parsed.map(item => ({
+        id: item.id, title: item.title, category: item.category,
+        content: item.content, summary: item.summary || '',
+        cover_image: item.cover_image || '',
+        is_published: item.is_published !== undefined ? item.is_published : 1,
+        created_at: item.created_at || new Date().toISOString(),
+        updated_at: item.updated_at || item.created_at || new Date().toISOString()
+      }));
+      data = { news, users: [...SEED_USERS], nextId: Math.max(...news.map(n => n.id), 0) + 1 };
+    } else {
+      data = parsed;
+    }
+  } catch (e) {
+    throw new Error(`GitHub JSON parse error: ${e.message}`);
+  }
+  
+  return { data, sha: file.sha };
 }
 
 // Write to GitHub (commits updated data.json)
@@ -275,15 +304,17 @@ app.put('/api/admin/news/:id', adminAuth, async (req, res) => {
     item.updated_at = new Date().toISOString();
 
     // Try GitHub write if configured
+    let gitError = null;
     if (canWriteToGitHub()) {
       try {
         await githubWrite(data, `编辑新闻: ${item.title}`);
       } catch (e) {
         console.error('GitHub write error:', e.message);
+        gitError = e.message;
       }
     }
 
-    res.json({ success: true, githubSync: canWriteToGitHub() });
+    res.json({ success: true, githubSync: canWriteToGitHub() && !gitError, gitError });
   } catch (err) {
     console.error('PUT /api/admin/news/:id error:', err.message);
     res.status(500).json({ error: '服务器错误' });
