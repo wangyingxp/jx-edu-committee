@@ -1,253 +1,575 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>上海江西商会教育服务工作委员会</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <a href="/" class="nav-logo">
-        <div class="logo-mark">教</div>
-        <div class="logo-info">
-          <h2>上海江西商会教工委</h2>
-          <span>教育服务工作委员会</span>
-        </div>
-      </a>
-      <div class="nav-links">
-        <a href="/" class="active">首页</a>
-        <a href="/about">关于我们</a>
-        <a href="/organization">组织架构</a>
-        <a href="/services">核心服务</a>
-        <a href="/news">新闻动态</a>
-        <a href="/contact">联系我们</a>
+<!-- 顶部导航 -->
+<header id="navbar">
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-text">
+        <span class="logo-title">上海江西商会</span>
+        <span class="logo-sub">教育服务工作委员会</span>
       </div>
     </div>
-  </nav>
+    <nav>
+      <a href="#home">首页</a>
+      <a href="#about">关于教工委</a>
+      <a href="#services">核心服务</a>
+      <a href="#news">新闻动态</a>
+      <a href="#org">组织架构</a>
+      <a href="#contact">联系我们</a>
+      <a href="/admin" class="admin-link">后台管理</a>
+    </nav>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="toggleMenu()">首页</a>
+    <a href="#about" onclick="toggleMenu()">关于教工委</a>
+    <a href="#services" onclick="toggleMenu()">核心服务</a>
+    <a href="#news" onclick="toggleMenu()">新闻动态</a>
+    <a href="#org" onclick="toggleMenu()">组织架构</a>
+    <a href="#contact" onclick="toggleMenu()">联系我们</a>
+    <a href="/admin" onclick="toggleMenu()">后台管理</a>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-pattern"></div>
-    <div class="hero-content">
-      <div class="hero-badge">上海市江西商会 · 教育服务工作委员会</div>
-      <h1>服务<span class="highlight">沪赣教育</span><br>助力<span class="highlight">人才发展</span></h1>
-      <p class="hero-subtitle">搭建专业、可信的教育支持与交流平台，<br>为沪赣两地会员家庭提供优质教育服务</p>
-      <div class="hero-buttons">
-        <a href="/about" class="btn btn-gold">了解我们</a>
-        <a href="/news" class="btn btn-outline">新闻动态</a>
+<!-- Hero 轮播 -->
+<section id="home" class="hero">
+  <div class="slides">
+    <div class="slide slide-1 active">
+      <div class="slide-deco">
+        <div class="deco-circle c1"></div>
+        <div class="deco-circle c2"></div>
+        <div class="deco-grid"></div>
+      </div>
+      <div class="slide-content">
+        <div class="slide-badge">上海江西商会教育服务工作委员会</div>
+        <h1>专业支持 · 可信对接</h1>
+        <p>服务商会会员家庭子女教育事务的专业平台</p>
+        <a href="#about" class="btn-primary">了解教工委</a>
       </div>
     </div>
-  </section>
-
-  <!-- Stats Strip -->
-  <section class="stats-strip">
-    <div class="stats-inner">
-      <div class="stat-block">
-        <div class="stat-number">15+</div>
-        <div class="stat-label">专家顾问团队</div>
+    <div class="slide slide-2">
+      <div class="slide-deco">
+        <div class="deco-circle c1"></div>
+        <div class="deco-circle c2"></div>
+        <div class="deco-grid"></div>
       </div>
-      <div class="stat-block">
-        <div class="stat-number">4</div>
-        <div class="stat-label">项核心服务</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number" id="news-count">0</div>
-        <div class="stat-label">条新闻动态</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">2</div>
-        <div class="stat-label">地协同发展</div>
+      <div class="slide-content">
+        <div class="slide-badge">沪赣教育与人才双向交流</div>
+        <h1>沪赣共赢 · 人才双向流动</h1>
+        <p>搭建沪赣两地教育交流与人才对接的常态化桥梁</p>
+        <a href="#services" class="btn-primary">核心服务</a>
       </div>
     </div>
-  </section>
+    <div class="slide slide-3">
+      <div class="slide-deco">
+        <div class="deco-circle c1"></div>
+        <div class="deco-circle c2"></div>
+        <div class="deco-grid"></div>
+      </div>
+      <div class="slide-content">
+        <div class="slide-badge">非营利 · 规范运行 · 公信力</div>
+        <h1>权威过滤 · 降低决策风险</h1>
+        <p>以周度信息支持 + 资金托管机制，切实保障会员权益</p>
+        <a href="#contact" class="btn-primary">联系我们</a>
+      </div>
+    </div>
+  </div>
+  <button class="slide-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+  <button class="slide-btn next" onclick="changeSlide(1)">&#10095;</button>
+  <div class="slide-dots" id="slideDots"></div>
+</section>
 
-  <!-- About Intro -->
-  <section class="section">
-    <div class="section-inner">
-      <div class="about-intro">
-        <div class="about-visual">
-          <div class="big-icon">🏛️</div>
-          <h3>上海江西商会教工委</h3>
-          <p>教育服务工作委员会</p>
-        </div>
-        <div class="about-text">
-          <h2>汇聚赣商力量<br>赋能教育未来</h2>
-          <p>上海江西商会教育服务工作委员会于2026年4月正式成立，是商会回应广大会员家庭在子女教育方面实际需求的重要举措。</p>
-          <p>教工委定位为服务商会会员家庭子女教育事务的专业支持与协同平台，同时作为沪赣两地教育交流与人才对接的桥梁纽带。</p>
-          <div class="about-features">
-            <div class="about-feature"><span class="dot"></span> 权威教育政策解读</div>
-            <div class="about-feature"><span class="dot"></span> 优质教育资源共享</div>
-            <div class="about-feature"><span class="dot"></span> 专家顾问团队支持</div>
-            <div class="about-feature"><span class="dot"></span> 沪赣两地交流对接</div>
+<!-- 快速入口 -->
+<section class="quick-links">
+  <div class="container">
+    <div class="ql-grid">
+      <div class="ql-item">
+        <div class="ql-icon">📚</div>
+        <h3>教育信息支持</h3>
+        <p>权威过滤 · 周度发布</p>
+        <a href="#services">了解详情</a>
+      </div>
+      <div class="ql-item">
+        <div class="ql-icon">🔍</div>
+        <h3>资源甄选对接</h3>
+        <p>少而可信 · 资金托管</p>
+        <a href="#services">了解详情</a>
+      </div>
+      <div class="ql-item">
+        <div class="ql-icon">🤝</div>
+        <h3>会员交流活动</h3>
+        <p>低频高质 · 理性交流</p>
+        <a href="#services">了解详情</a>
+      </div>
+      <div class="ql-item">
+        <div class="ql-icon">🌉</div>
+        <h3>沪赣人才对接</h3>
+        <p>政企联动 · 精准对接</p>
+        <a href="#services">了解详情</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 关于教工委 -->
+<section id="about" class="section bg-light">
+  <div class="container">
+    <div class="section-header">
+      <h2>关于教工委</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>定位与使命</h3>
+        <p>上海江西商会教育服务工作委员会（简称"教工委"）由上海江西商会发起设立，定位为：<strong>服务商会会员家庭子女教育事务的专业支持与协同平台，同时作为沪赣两地教育交流与人才对接的桥梁纽带。</strong></p>
+        <p>教工委坚持非营利导向，不以直接经营教育业务为目的。上海教育资源高度集中，但政策体系复杂、信息分散、专业门槛较高，会员家庭在关键升学节点面临较高决策风险。教工委以组织化、规范化方式整合资源，输出专业支持，切实降低会员家庭的信息成本与试错风险。</p>
+        <p>与此同时，教工委积极响应江西省政府人才战略，搭建沪赣两地教育资源协同与人才双向流动的常态化机制。</p>
+        <div class="principles-row">
+          <div class="principle-item">
+            <span class="p-icon">⚖️</span>
+            <span>非营利导向</span>
+          </div>
+          <div class="principle-item">
+            <span class="p-icon">🛡️</span>
+            <span>支持不替代决策</span>
+          </div>
+          <div class="principle-item">
+            <span class="p-icon">📋</span>
+            <span>规范透明运行</span>
+          </div>
+          <div class="principle-item">
+            <span class="p-icon">🏛️</span>
+            <span>政企协同联动</span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Core Services -->
-  <section class="section section-alt">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">CORE SERVICES</div>
-        <h2>核心服务</h2>
-        <div class="divider"></div>
-        <p class="section-desc">四大核心服务板块，全方位支持会员家庭教育需求</p>
+      <div class="about-img">
+        <img src="assets/about.jpg" alt="关于教工委" onerror="this.parentElement.classList.add('img-placeholder')" />
       </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon red">🎓</div>
-          <h4>教育信息支持</h4>
-          <p>稳定输出、权威过滤的教育政策与升学信息，帮助会员家庭精准把握教育动态</p>
+    </div>
+
+    <!-- 背景痛点 -->
+    <div class="pain-points">
+      <h3 class="sub-title">设立背景：会员家庭面临的教育挑战</h3>
+      <div class="pain-grid">
+        <div class="pain-item">
+          <span class="pain-icon">📊</span>
+          <h4>政策更新频繁</h4>
+          <p>教育政策理解与判断成本较高，关键信息难以及时获取</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon gold">🔍</div>
-          <h4>教育服务甄选</h4>
-          <p>建立服务能力甄选与动态管理机制，为会员提供可信的教育资源选择与对接</p>
+        <div class="pain-item">
+          <span class="pain-icon">🌐</span>
+          <h4>信息来源繁杂</h4>
+          <p>缺乏权威筛选与可信背书，真伪难辨</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon blue">👥</div>
-          <h4>会员交流支持</h4>
-          <p>主题沙龙、专家连线，促进会员家庭间教育经验的理性交流与有序共享</p>
+        <div class="pain-item">
+          <span class="pain-icon">⏰</span>
+          <h4>时间精力有限</h4>
+          <p>企业主家庭事务繁忙，难以系统投入长期教育规划</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon green">🌉</div>
-          <h4>沪赣人才交流</h4>
-          <p>搭建沪赣两地教育与人才交流桥梁，推动教育资源协同与人才双向流动</p>
+        <div class="pain-item">
+          <span class="pain-icon">⚠️</span>
+          <h4>决策风险较高</h4>
+          <p>升学关键节点判断失误，调整成本极大</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Latest News -->
-  <section class="section">
-    <div class="section-inner">
-      <div class="section-header">
-        <div class="section-tag">LATEST NEWS</div>
-        <h2>最新动态</h2>
-        <div class="divider"></div>
-        <p class="section-desc">关注教工委最新活动与教育资讯</p>
-      </div>
-      <div class="news-grid" id="news-container">
-        <div class="news-card">
-          <div class="news-card-cover cat-default" style="display:flex;align-items:center;justify-content:center;color:white;">
-            <div class="spinner" style="margin-right:12px;"></div>加载中...
-          </div>
-          <div class="news-card-body">
-            <h4>正在加载最新动态...</h4>
-            <p>正在从服务器获取最新新闻</p>
-            <div class="news-card-footer">
-              <span class="news-card-date">--</span>
-              <span class="news-card-read"></span>
+<!-- 核心服务 -->
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>核心服务</h2>
+      <div class="divider"></div>
+      <p class="section-desc">教工委初期围绕四大核心职能展开，坚持聚焦会员真实需求、控制服务边界、稳步推进</p>
+    </div>
+
+    <div class="service-cards">
+      <!-- 服务1 -->
+      <div class="service-card">
+        <div class="sc-header">
+          <span class="sc-num">01</span>
+          <div class="sc-icon">📚</div>
+          <h3>教育信息支持</h3>
+          <p class="sc-tag">稳定输出 · 权威过滤 · 节奏可控</p>
+        </div>
+        <div class="sc-body">
+          <ul>
+            <li>上海及全国与会员家庭高度相关的教育政策</li>
+            <li>幼升小、小升初、中考、高考等关键升学节点信息</li>
+            <li>学段衔接、政策调整相关的制度性变化与风险提示</li>
+          </ul>
+          <div class="sc-detail">
+            <div class="sc-detail-item">
+              <strong>常规信息</strong>
+              <span>以周度为基本频次，发布经整理的政策要点与关键信息摘要</span>
+            </div>
+            <div class="sc-detail-item">
+              <strong>节点提醒</strong>
+              <span>围绕开学、期中、期末、寒暑假等关键节点集中提示与解读</span>
+            </div>
+            <div class="sc-detail-item">
+              <strong>研究内容</strong>
+              <span>不定期整理筛选的教育研究成果、成熟实践案例及会员经验</span>
             </div>
           </div>
         </div>
       </div>
-      <div style="text-align:center;margin-top:36px;">
-        <a href="/news" class="btn btn-ghost">查看全部动态</a>
+
+      <!-- 服务2 -->
+      <div class="service-card">
+        <div class="sc-header">
+          <span class="sc-num">02</span>
+          <div class="sc-icon">🔍</div>
+          <h3>教育资源甄选与对接</h3>
+          <p class="sc-tag">少而可信 · 分学段管理 · 机制优先</p>
+        </div>
+        <div class="sc-body">
+          <p class="sc-intro">教工委不直接提供教育服务，而是通过建立服务能力甄选与动态管理机制，为会员提供可信的选择参考与对接支持。</p>
+          <div class="stage-tags">
+            <span>学前（3-6岁）</span>
+            <span>小学（1-5年级）</span>
+            <span>初中（6-9年级）</span>
+            <span>高中（10-12年级）</span>
+            <span>大学及以后</span>
+          </div>
+          <div class="sc-detail">
+            <div class="sc-detail-item">
+              <strong>资金托管</strong>
+              <span>类似支付宝逻辑，服务完成后方付款，保障会员权益</span>
+            </div>
+            <div class="sc-detail-item">
+              <strong>动态管理</strong>
+              <span>形成内部推荐名录，结合会员反馈持续优化资源结构</span>
+            </div>
+            <div class="sc-detail-item">
+              <strong>监管费率</strong>
+              <span>交易金额的5%由服务提供方支出，用于教工委日常运营</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 服务3 -->
+      <div class="service-card">
+        <div class="sc-header">
+          <span class="sc-num">03</span>
+          <div class="sc-icon">🤝</div>
+          <h3>会员交流与能力支持</h3>
+          <p class="sc-tag">低频高质 · 理性交流 · 避免活动泛化</p>
+        </div>
+        <div class="sc-body">
+          <div class="sc-detail">
+            <div class="sc-detail-item">
+              <strong>线下沙龙</strong>
+              <span>每年4–6场，围绕明确教育主题，单场20–40人</span>
+            </div>
+            <div class="sc-detail-item">
+              <strong>线上专家连线</strong>
+              <span>每季度1-2次（腾讯会议模式），单次5-15人</span>
+            </div>
+            <div class="sc-detail-item">
+              <strong>内容侧重</strong>
+              <span>升学决策逻辑、体制内与国际化路径比较、会员经验分享</span>
+            </div>
+          </div>
+          <p class="sc-note">严控活动数量，重视内容质量；明确活动为"支持与交流"，避免商业推介</p>
+        </div>
+      </div>
+
+      <!-- 服务4 -->
+      <div class="service-card featured-service">
+        <div class="sc-header">
+          <span class="sc-num">04</span>
+          <div class="sc-icon">🌉</div>
+          <h3>沪赣教育与人才双向交流</h3>
+          <p class="sc-tag">政企联动 · 资源互通 · 精准对接 · 服务江西</p>
+        </div>
+        <div class="sc-body">
+          <p class="sc-intro">响应江西省人才战略与教育强市建设目标，依托上海优质教育与人才资源，搭建沪赣两地教育交流与人才对接的常态化桥梁。</p>
+          <div class="exchange-grid">
+            <div class="exchange-item">
+              <h5>🏫 教育资源协同</h5>
+              <p>校校结对共建、师资双向交流、教育数字化合作、职业教育产教融合</p>
+            </div>
+            <div class="exchange-item">
+              <h5>👥 人才双向对接</h5>
+              <p>人才信息互通共享、赣籍人才回流服务、上海人才赴赣对接、会员企业人才供需匹配</p>
+            </div>
+            <div class="exchange-item">
+              <h5>🎯 品牌活动打造</h5>
+              <p>年度沪赣教育发展高峰论坛、定期人才专场对接会、寒暑假师生互访研学</p>
+            </div>
+            <div class="exchange-item">
+              <h5>🏛️ 政府对接</h5>
+              <p>对接江西省人社局、教育局、招商局等相关部门，实现政企协同发力</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="section-inner">
-      <h2>加入我们，共建沪赣教育桥梁</h2>
-      <p>如果您是教育领域的专家学者，或希望为会员家庭提供教育资源支持，欢迎联系我们</p>
-      <div class="cta-buttons">
-        <a href="/contact" class="btn btn-gold">联系我们</a>
-        <a href="/about" class="btn btn-outline">了解更多</a>
+    <!-- 服务原则 -->
+    <div class="principles-box">
+      <h3>整体运行原则</h3>
+      <div class="principles-list">
+        <span>✅ 分阶段推进，不一次性铺开</span>
+        <span>✅ 支持而不替代家庭决策</span>
+        <span>✅ 非营利、非商业化导向</span>
+        <span>✅ 可管理、可评估、可调整</span>
+        <span>✅ 政企协同，紧扣江西政府发展需求</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-grid">
-      <div class="footer-col about">
-        <h4>关于教工委</h4>
-        <p>上海江西商会教育服务工作委员会，致力于服务商会会员家庭子女教育事务，搭建沪赣两地教育交流与人才对接的桥梁纽带。</p>
+<!-- 新闻动态 -->
+<section id="news" class="section bg-light">
+  <div class="container">
+    <div class="section-header">
+      <h2>新闻动态</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="news-tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'news-list')">最新动态</button>
+      <button class="tab-btn" onclick="switchTab(this,'activity-list')">活动报道</button>
+      <button class="tab-btn" onclick="switchTab(this,'notice-list')">通知公告</button>
+    </div>
+    <div id="news-list" class="news-grid tab-content active" data-cat="news"></div>
+    <div id="activity-list" class="news-grid tab-content" data-cat="activity"></div>
+    <div id="notice-list" class="news-grid tab-content" data-cat="notice"></div>
+    <div class="more-link"><a href="/news" class="btn-outline">查看更多</a></div>
+  </div>
+</section>
+
+<!-- 组织架构 -->
+<section id="org" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>组织架构</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="org-layers">
+      <div class="org-layer">
+        <div class="ol-label strategic">战略指导层</div>
+        <div class="ol-content">
+          <div class="ol-item">
+            <h5>荣誉主任</h5>
+            <p>商会会长 · 1名</p>
+          </div>
+          <div class="ol-item">
+            <h5>总顾问</h5>
+            <p>商会执行会长 + 秘书长 · 4名</p>
+          </div>
+          <div class="ol-item">
+            <h5>监事长</h5>
+            <p>商会监事长 · 1名</p>
+          </div>
+        </div>
+        <p class="ol-note">不负责日常运营，提供最高层面全面指导与资源背书</p>
       </div>
-      <div class="footer-col links">
-        <h4>快速链接</h4>
-        <a href="/about">关于我们</a>
-        <a href="/organization">组织架构</a>
-        <a href="/services">核心服务</a>
-        <a href="/news">新闻动态</a>
-        <a href="/contact">联系我们</a>
+
+      <div class="org-arrow-down">↓</div>
+
+      <div class="org-layer">
+        <div class="ol-label management">管理层</div>
+        <div class="ol-content">
+          <div class="ol-item">
+            <h5>主任</h5>
+            <p>教工委总负责人，由商会任命</p>
+          </div>
+          <div class="ol-item">
+            <h5>副主任（若干）</h5>
+            <p>分管基础教育、国际教育、综合服务、活动运营等</p>
+          </div>
+        </div>
+        <p class="ol-note">负责战略方向、资源支持与品牌背书，进行内部监督与财务规范</p>
       </div>
-      <div class="footer-col links">
-        <h4>新闻分类</h4>
-        <a href="/news">机构动态</a>
-        <a href="/news">活动报道</a>
-        <a href="/news">沪赣交流</a>
-        <a href="/news">教育资讯</a>
+
+      <div class="org-arrow-down">↓</div>
+
+      <div class="org-layer">
+        <div class="ol-label executive">执行层</div>
+        <div class="ol-content">
+          <div class="ol-item">
+            <h5>秘书处</h5>
+            <p>秘书长1名 + 副秘书长/工作人员若干，负责事项协调推进与供应商管理</p>
+          </div>
+          <div class="ol-item">
+            <h5>运营部</h5>
+            <p>支付全职或兼职工资，负责日常运营、活动策划与执行</p>
+          </div>
+        </div>
       </div>
-      <div class="footer-col contact">
-        <h4>联系我们</h4>
-        <div class="contact-row"><span class="ci">📍</span> 上海市浦东新区</div>
-        <div class="contact-row"><span class="ci">📞</span> 021-XXXXXXXX</div>
-        <div class="contact-row"><span class="ci">📧</span> contact@jxedu.org.cn</div>
+
+      <div class="org-arrow-down">↓</div>
+
+      <div class="org-layer">
+        <div class="ol-label support">专业支持层</div>
+        <div class="ol-content">
+          <div class="ol-item">
+            <h5>顾问委员会</h5>
+            <p>九江籍教育专家顾问团、沪赣两地院校专家、长三角教育与人才发展研究专家，设"主任委员"、"委员"</p>
+          </div>
+          <div class="ol-item">
+            <h5>理事单位</h5>
+            <p>通过严格评审加入的核心合作资源方，经初审、评审、公示、聘任四环节入选，其负责人称为"教工委理事"</p>
+          </div>
+        </div>
+        <p class="ol-note">理事单位实行动态管理：累计3次有效投诉或连续3次未参加理事会会议，取消资格</p>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 上海江西商会教育服务工作委员会 版权所有</span>
-      <span>沪ICP备XXXXXXXX号</span>
+
+    <!-- 理事单位入选标准 -->
+    <div class="criteria-box">
+      <h3>理事单位入选标准</h3>
+      <div class="criteria-grid">
+        <div class="criteria-item">
+          <span class="ci-icon">✅</span>
+          <div>
+            <strong>基本条件</strong>
+            <p>上海江西商会正式会员，或由教工委主任特别邀请的外部人员</p>
+          </div>
+        </div>
+        <div class="criteria-item">
+          <span class="ci-icon">🎓</span>
+          <div>
+            <strong>专业背景</strong>
+            <p>教育行业从业者，或拥有优质教育资源者优先</p>
+          </div>
+        </div>
+        <div class="criteria-item">
+          <span class="ci-icon">🤲</span>
+          <div>
+            <strong>贡献意愿</strong>
+            <p>愿意为教工委提供资源支持或专业服务</p>
+          </div>
+        </div>
+        <div class="criteria-item">
+          <span class="ci-icon">⭐</span>
+          <div>
+            <strong>信誉要求</strong>
+            <p>无不良商业记录，在商会内有良好口碑</p>
+          </div>
+        </div>
+        <div class="criteria-item">
+          <span class="ci-icon">💰</span>
+          <div>
+            <strong>赞助承诺</strong>
+            <p>同意缴纳理事赞助费（建议每年1万元；初期可先交5000元）</p>
+          </div>
+        </div>
+        <div class="criteria-item">
+          <span class="ci-icon">🔒</span>
+          <div>
+            <strong>合规要求</strong>
+            <p>具备合法经营资质，接受教工委监管与费用托管机制</p>
+          </div>
+        </div>
+      </div>
+      <div class="apply-btn-row">
+        <a href="#contact" class="btn-primary">申请成为理事单位</a>
+      </div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    (function() {
-      var nav = document.getElementById('navbar');
-      window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) nav.classList.add('scrolled');
-        else nav.classList.remove('scrolled');
-      });
+<!-- 联系我们 -->
+<section id="contact" class="section bg-dark">
+  <div class="container">
+    <div class="section-header light">
+      <h2>联系我们</h2>
+      <div class="divider white"></div>
+      <p class="section-desc" style="color:rgba(255,255,255,0.6)">欢迎商会会员家庭及有意向加入教工委的机构与个人与我们取得联系</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>教工委秘书处</h3>
+        <div class="contact-item"><span class="ci-icon">📍</span><span>上海市（地址待公布）</span></div>
+        <div class="contact-item"><span class="ci-icon">📧</span><span>secretariat@jx-edu-committee.org</span></div>
+        <div class="contact-item"><span class="ci-icon">🕐</span><span>工作日 09:00 - 18:00</span></div>
+        <div class="contact-item"><span class="ci-icon">👥</span><span>仅服务上海江西商会会员家庭</span></div>
+        <div class="wechat-box">
+          <p>扫码关注教工委公众号</p>
+          <div class="qr-placeholder">
+            <img src="assets/qrcode.png" alt="公众号二维码" onerror="this.parentElement.classList.add('qr-empty')" />
+          </div>
+        </div>
+        <div class="contact-notice">
+          <p>📌 <strong>试运营期间</strong>（2026年4月—9月），教工委仅服务上海江西商会会员家庭，欢迎通过公众号或秘书处联系参与。</p>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h3>在线留言</h3>
+        <form onsubmit="submitForm(event)">
+          <div class="form-row">
+            <input type="text" placeholder="您的姓名 *" required />
+            <input type="text" placeholder="联系电话 *" required />
+          </div>
+          <input type="email" placeholder="电子邮箱" />
+          <select>
+            <option value="" disabled selected>留言类型</option>
+            <option>会员家庭教育咨询</option>
+            <option>申请成为理事单位</option>
+            <option>沪赣教育人才合作</option>
+            <option>媒体与合作事宜</option>
+            <option>其他</option>
+          </select>
+          <textarea placeholder="留言内容 *" rows="5" required></textarea>
+          <button type="submit" class="btn-primary full">提交留言</button>
+        </form>
+        <div id="form-success" class="form-success" style="display:none">✅ 留言已提交，秘书处将尽快与您联系！</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      fetch('/api/news')
-        .then(function(res) { if (!res.ok) throw new Error('请求失败'); return res.json(); })
-        .then(function(data) {
-          var container = document.getElementById('news-container');
-          var newsList = data.news || data;
-          document.getElementById('news-count').textContent = data.total || newsList.length;
-          if (!newsList || newsList.length === 0) {
-            container.innerHTML = '<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:40px;">暂无新闻动态</p>';
-            return;
-          }
-          container.innerHTML = '';
-          var catClass = { '机构动态': 'cat-org', '活动报道': 'cat-event', '沪赣交流': 'cat-exchange', '教育资讯': 'cat-edu' };
-          var catIcon = { '机构动态': '🏛️', '活动报道': '📰', '沪赣交流': '🌉', '教育资讯': '📚' };
-          newsList.slice(0, 6).forEach(function(item) {
-            var cc = catClass[item.category] || 'cat-default';
-            var ci = catIcon[item.category] || '📄';
-            var date = item.created_at ? item.created_at.substring(0, 10) : '';
-            var card = document.createElement('div');
-            card.className = 'news-card';
-            card.innerHTML =
-              '<a href="/news/' + item.id + '">' +
-              '<div class="news-card-cover ' + cc + '">' +
-              '<span class="cover-tag">' + (item.category || '资讯') + '</span>' +
-              ci +
-              '</div>' +
-              '<div class="news-card-body">' +
-              '<h4>' + (item.title || '无标题') + '</h4>' +
-              '<p>' + (item.summary || '') + '</p>' +
-              '<div class="news-card-footer">' +
-              '<span class="news-card-date">' + date + '</span>' +
-              '<span class="news-card-read">查看详情</span>' +
-              '</div></div></a>';
-            container.appendChild(card);
-          });
-        })
-        .catch(function() {
-          document.getElementById('news-container').innerHTML = '<p style="text-align:center;color:var(--text-light);grid-column:1/-1;padding:40px;">暂无新闻动态</p>';
-        });
-    })();
-  </script>
-  <script src="/js/main.js"></script>
+<!-- 底部 -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-title">上海江西商会</span>
+      <span class="logo-sub">教育服务工作委员会</span>
+    </div>
+    <div class="footer-links">
+      <a href="#home">首页</a>
+      <a href="#about">关于教工委</a>
+      <a href="#services">核心服务</a>
+      <a href="#news">新闻动态</a>
+      <a href="#org">组织架构</a>
+      <a href="#contact">联系我们</a>
+      <a href="/admin">后台管理</a>
+    </div>
+    <div class="footer-copy">
+      <p>© 2026 上海江西商会教育服务工作委员会 版权所有 · 非营利机构</p>
+    </div>
+  </div>
+</footer>
+
+<!-- 新闻详情弹窗 -->
+<div class="news-modal-overlay" id="newsModal" onclick="closeNewsModal(event)">
+  <div class="news-modal-box">
+    <button class="news-modal-close" onclick="closeNewsModal()">×</button>
+    <div class="news-modal-tag-row">
+      <span class="news-tag" id="modal-tag" style="display:none"></span>
+      <span class="news-modal-date" id="modal-date"></span>
+    </div>
+    <h2 id="modal-title-text"></h2>
+    <div class="news-modal-body" id="modal-body-content"></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
 </body>
 </html>
