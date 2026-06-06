@@ -7,47 +7,47 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="header-top">
-      <div class="logo">
-        <div class="logo-icon">教</div>
-        <div class="logo-text">
-          <h1>上海江西商会教工委</h1>
-          <span>上海市江西商会教育科技工作委员会</span>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <div class="logo-mark">教</div>
+        <div class="logo-info">
+          <h2>上海江西商会教工委</h2>
+          <span>教育服务工作委员会</span>
         </div>
-      </div>
-      <nav class="nav">
+      </a>
+      <div class="nav-links">
         <a href="/">首页</a>
         <a href="/about">关于我们</a>
         <a href="/organization">组织架构</a>
         <a href="/services">核心服务</a>
         <a href="/news">新闻动态</a>
         <a href="/contact">联系我们</a>
-      </nav>
+      </div>
     </div>
-  </header>
+  </nav>
 
   <!-- News Detail -->
-  <section class="news-detail-page">
-    <div class="section-container">
-      <div id="loadingMessage" style="text-align:center;color:var(--text-light);padding:60px;">
-        <div class="spinner" style="border-color:rgba(26,54,93,0.3);border-top-color:var(--primary);width:32px;height:32px;top:auto;"></div>
-        <p style="margin-top:16px;">加载中...</p>
+  <section class="section" style="padding-top:120px;">
+    <div class="section-inner" style="max-width:800px;">
+
+      <div id="loadingMessage" style="text-align:center;padding:60px;">
+        <div class="spinner" style="border-color:rgba(139,26,26,0.2);border-top-color:var(--primary);width:40px;height:40px;margin:0 auto 16px;"></div>
+        <p style="color:var(--text-light);">加载中...</p>
       </div>
 
       <div id="newsContent" style="display:none;">
-        <a href="/news" style="display:inline-block;margin-bottom:24px;color:var(--primary);font-size:14px;">&larr; 返回新闻列表</a>
-        <div class="news-detail-header">
-          <h1 id="newsTitle"></h1>
-          <div class="news-detail-meta" id="newsMeta"></div>
-        </div>
-        <div class="news-detail-body" id="newsBody"></div>
+        <a href="/news" style="display:inline-block;margin-bottom:32px;color:var(--primary);font-size:14px;text-decoration:none;">&larr; 返回新闻列表</a>
+        <h1 id="newsTitle" style="font-size:32px;color:var(--dark);margin-bottom:20px;line-height:1.3;"></h1>
+        <div id="newsMeta" style="color:var(--text-light);font-size:14px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border);"></div>
+        <div id="newsBody" style="font-size:16px;line-height:1.9;color:var(--text);"></div>
       </div>
 
       <div id="errorMessage" style="display:none;text-align:center;padding:60px;">
-        <p id="errorText" style="color:var(--danger);font-size:18px;margin-bottom:16px;"></p>
-        <a href="/news" class="btn btn-primary">返回新闻列表</a>
+        <p id="errorText" style="font-size:18px;margin-bottom:24px;color:var(--text-light);"></p>
+        <a href="/news" class="btn btn-gold">返回新闻列表</a>
       </div>
     </div>
   </section>
@@ -55,81 +55,79 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-grid">
-      <div class="footer-col">
-        <h4>上海市江西商会教育科技工作委员会</h4>
-        <p>致力于服务在沪赣籍教育科技界人士</p>
+      <div class="footer-col about">
+        <h4>关于教工委</h4>
+        <p>上海江西商会教育服务工作委员会，致力于服务商会会员家庭子女教育事务，搭建沪赣两地教育交流与人才对接的桥梁纽带。</p>
       </div>
-      <div class="footer-col">
+      <div class="footer-col links">
         <h4>快速链接</h4>
-        <p><a href="/">首页</a></p>
-        <p><a href="/about">关于我们</a></p>
-        <p><a href="/organization">组织架构</a></p>
-        <p><a href="/services">核心服务</a></p>
-        <p><a href="/news">新闻动态</a></p>
-        <p><a href="/contact">联系我们</a></p>
+        <a href="/">首页</a>
+        <a href="/about">关于我们</a>
+        <a href="/organization">组织架构</a>
+        <a href="/services">核心服务</a>
+        <a href="/news">新闻动态</a>
+        <a href="/contact">联系我们</a>
       </div>
-      <div class="footer-col">
-        <h4>联系方式</h4>
-        <p>手机：139****8888</p>
-        <p>邮箱：contact@jxedu.sh.cn</p>
-        <p>地址：上海市</p>
+      <div class="footer-col links">
+        <h4>新闻分类</h4>
+        <a href="/news">机构动态</a>
+        <a href="/news">活动报道</a>
+        <a href="/news">沪赣交流</a>
+        <a href="/news">教育资讯</a>
+      </div>
+      <div class="footer-col contact">
+        <h4>联系我们</h4>
+        <div class="contact-row"><span class="ci">📍</span> 上海市浦东新区</div>
+        <div class="contact-row"><span class="ci">📞</span> 021-XXXXXXXX</div>
+        <div class="contact-row"><span class="ci">📧</span> contact@jxedu.org.cn</div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 上海市江西商会教育科技工作委员会 版权所有</p>
+      <span>&copy; 2026 上海江西商会教育服务工作委员会 版权所有</span>
+      <span>沪ICP备XXXXXXXX号</span>
     </div>
   </footer>
 
   <script src="/js/main.js"></script>
   <script>
-    // 从路径或查询参数获取新闻ID
+    var nav = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
     function getNewsId() {
-      const pathParts = window.location.pathname.split('/').filter(Boolean);
-      if (pathParts.length >= 2 && pathParts[0] === 'news') {
-        return pathParts[1];
-      }
-      const params = new URLSearchParams(window.location.search);
+      var parts = window.location.pathname.split('/').filter(Boolean);
+      if (parts.length >= 2 && parts[0] === 'news') return parts[1];
+      var params = new URLSearchParams(window.location.search);
       return params.get('id');
     }
 
     async function loadNewsDetail() {
-      const newsId = getNewsId();
-      if (!newsId) {
-        showError('缺少新闻ID参数');
-        return;
-      }
-
+      var newsId = getNewsId();
+      if (!newsId) { showError('缺少新闻ID参数'); return; }
       try {
-        const res = await fetch(`/api/news/${newsId}`);
+        var res = await fetch('/api/news/' + newsId);
         if (!res.ok) {
-          if (res.status === 404) {
-            showError('文章不存在或未发布');
-          } else {
-            showError('加载失败，请稍后重试');
-          }
+          showError(res.status === 404 ? '文章不存在或未发布' : '加载失败，请稍后重试');
           return;
         }
-        const news = await res.json();
+        var news = await res.json();
         renderNews(news);
-      } catch (err) {
+      } catch(err) {
         showError('加载失败，请稍后重试');
-        console.error('加载新闻详情失败:', err);
       }
     }
 
     function renderNews(news) {
       document.getElementById('loadingMessage').style.display = 'none';
       document.getElementById('newsContent').style.display = 'block';
-
-      document.title = `${news.title} - 上海江西商会教工委`;
+      document.title = news.title + ' - 上海江西商会教工委';
       document.getElementById('newsTitle').textContent = news.title;
-      document.getElementById('newsMeta').innerHTML = `
-        发布时间：${formatDate(news.created_at)} &nbsp;|&nbsp; 分类：${escapeHtml(news.category)}
-      `;
-
-      const body = document.getElementById('newsBody');
+      document.getElementById('newsMeta').innerHTML = '发布时间：' + formatDate(news.created_at) + ' &nbsp;|&nbsp; 分类：' + escapeHtml(news.category);
+      var body = document.getElementById('newsBody');
       if (news.cover_image) {
-        body.innerHTML += `<img src="${escapeHtml(news.cover_image)}" style="max-width:100%;border-radius:8px;margin-bottom:24px;" alt="${escapeHtml(news.title)}">`;
+        body.innerHTML += '<img src="' + escapeHtml(news.cover_image) + '" style="max-width:100%;border-radius:12px;margin-bottom:24px;" alt="' + escapeHtml(news.title) + '">';
       }
       body.innerHTML += news.content || '';
     }

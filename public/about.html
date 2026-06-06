@@ -8,45 +8,54 @@
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-top">
-      <a href="/" class="logo">
-        <div class="logo-icon">教</div>
-        <div class="logo-text">
-          <h1>上海江西商会教工委</h1>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="/" class="nav-logo">
+        <div class="logo-mark">教</div>
+        <div class="logo-info">
+          <h2>上海江西商会教工委</h2>
           <span>教育服务工作委员会</span>
         </div>
       </a>
-      <nav class="nav">
+      <div class="nav-links">
         <a href="/">首页</a>
         <a href="/about" class="active">关于我们</a>
         <a href="/organization">组织架构</a>
         <a href="/services">核心服务</a>
         <a href="/news">新闻动态</a>
         <a href="/contact">联系我们</a>
-      </nav>
+      </div>
     </div>
-  </header>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="section-inner">
+      <div class="section-tag">ABOUT US</div>
+      <h1>关于我们</h1>
+      <div class="divider"></div>
+      <p class="section-desc" style="max-width:640px;margin:0 auto;">了解教工委的设立背景、定位与目标</p>
+    </div>
+  </section>
 
   <!-- Content -->
-  <section class="content-page">
-    <div class="section-container">
-      <h2>关于教工委</h2>
+  <section class="section">
+    <div class="section-inner" style="max-width:860px;">
 
-      <h3>背景与设立必要性</h3>
+      <h3 style="font-size:24px;color:var(--primary);margin-bottom:16px;">背景与设立必要性</h3>
       <p>随着上海江西商会会员企业持续发展，越来越多会员家庭在上海长期工作、生活，其子女教育问题已逐步成为影响家庭稳定、企业家精力投入以及商会凝聚力的重要议题。上海教育资源高度集中，但政策体系复杂、信息分散、专业门槛较高，会员家庭在子女升学路径规划、学校选择、教育资源配置等方面面临较大的信息不对称和决策压力。</p>
       <p>在此背景下，上海江西商会设立教育服务工作委员会，旨在整合沪赣两地优质教育资源，建立专业化、系统化的教育服务支持体系，为会员家庭子女教育提供持续、可靠的信息支持和服务保障，切实将亲子教育转化为商会内部一项可长期运作、可不断优化的公共服务能力。</p>
 
-      <h3>教工委定位</h3>
+      <h3 style="font-size:24px;color:var(--primary);margin:36px 0 16px;">教工委定位</h3>
       <p>教工委定位为"服务商会会员家庭子女教育事务的专业支持与协同平台，同时作为沪赣两地教育交流与人才对接的桥梁纽带"。</p>
       <p>教工委并非直接提供教育服务的运营实体，而是发挥平台枢纽功能：一方面汇聚可信的教育信息和优质的服务资源，另一方面连接会员家庭的实际需求，形成信息透明、服务规范、对接高效的工作闭环。</p>
 
-      <h3>总体目标</h3>
+      <h3 style="font-size:24px;color:var(--primary);margin:36px 0 16px;">总体目标</h3>
       <p>通过规范运行教工委，逐步建立一套稳定、可持续、可评估的会员教育支持机制，切实降低会员家庭在教育决策中的信息成本与试错风险；同时构建沪赣两地教育与人才交流的常态化机制，助力区域教育协同与人才高质量发展。</p>
 
-      <h3>阶段性目标</h3>
-      <ul>
+      <h3 style="font-size:24px;color:var(--primary);margin:36px 0 16px;">阶段性目标</h3>
+      <ul style="line-height:2;color:var(--text);padding-left:20px;">
         <li><strong>第一阶段（2026年4月-6月）：启动期。</strong>完成组织架构搭建，建立基本运行机制，启动信息发布和服务资源收集。</li>
         <li><strong>第二阶段（2026年7月-8月）：验证期。</strong>开展首批服务试点，举办主题沙龙活动，测试服务流程和反馈机制。</li>
         <li><strong>第三阶段（2026年9月）：评估期。</strong>总结试运营经验，评估服务效果，形成正式运营方案并提交商会审议。</li>
@@ -55,9 +64,9 @@
         <li>构建沪赣两地至少10组校校结对共建关系，促进教育理念交流与经验共享。</li>
       </ul>
 
-      <h3>核心原则</h3>
+      <h3 style="font-size:24px;color:var(--primary);margin:36px 0 16px;">核心原则</h3>
       <p>教工委在工作中始终遵循以下核心原则：</p>
-      <ul>
+      <ul style="line-height:2;color:var(--text);padding-left:20px;">
         <li><strong>非营利导向：</strong>教工委以服务会员为核心宗旨，不以营利为目的，所有活动和服务围绕会员需求展开。</li>
         <li><strong>分阶段推进：</strong>从试运营起步，逐步验证、迭代、完善，确保服务质量和可持续性。</li>
         <li><strong>支持而不替代决策：</strong>教工委提供信息、资源和平台支持，但尊重每个家庭的教育自主权，不替代家庭做出教育决策。</li>
@@ -68,31 +77,45 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-grid">
-      <div class="footer-col">
+      <div class="footer-col about">
         <h4>关于教工委</h4>
         <p>上海江西商会教育服务工作委员会，致力于服务商会会员家庭子女教育事务，搭建沪赣两地教育交流与人才对接的桥梁纽带。</p>
       </div>
-      <div class="footer-col">
+      <div class="footer-col links">
         <h4>快速链接</h4>
-        <p><a href="/about">关于我们</a></p>
-        <p><a href="/organization">组织架构</a></p>
-        <p><a href="/services">核心服务</a></p>
-        <p><a href="/news">新闻动态</a></p>
-        <p><a href="/contact">联系我们</a></p>
+        <a href="/about">关于我们</a>
+        <a href="/organization">组织架构</a>
+        <a href="/services">核心服务</a>
+        <a href="/news">新闻动态</a>
+        <a href="/contact">联系我们</a>
       </div>
-      <div class="footer-col">
+      <div class="footer-col links">
+        <h4>新闻分类</h4>
+        <a href="/news">机构动态</a>
+        <a href="/news">活动报道</a>
+        <a href="/news">沪赣交流</a>
+        <a href="/news">教育资讯</a>
+      </div>
+      <div class="footer-col contact">
         <h4>联系我们</h4>
-        <p>地址：上海市浦东新区</p>
-        <p>电话：021-XXXXXXXX</p>
-        <p>邮箱：contact@jxedu.org.cn</p>
-        <p>微信公众号：上海江西商会教工委</p>
+        <div class="contact-row"><span class="ci">📍</span> 上海市浦东新区</div>
+        <div class="contact-row"><span class="ci">📞</span> 021-XXXXXXXX</div>
+        <div class="contact-row"><span class="ci">📧</span> contact@jxedu.org.cn</div>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; 2026 上海江西商会教育服务工作委员会 版权所有
+      <span>&copy; 2026 上海江西商会教育服务工作委员会 版权所有</span>
+      <span>沪ICP备XXXXXXXX号</span>
     </div>
   </footer>
 
   <script src="/js/main.js"></script>
+  <script>
+    var nav = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+  </script>
 </body>
 </html>
